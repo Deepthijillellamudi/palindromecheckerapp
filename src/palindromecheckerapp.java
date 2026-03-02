@@ -1,25 +1,21 @@
-class PalindromeChecker {
+import java.util.Stack;
 
-   // Method to check palindrome using internal array logic
-   public boolean checkPalindrome(String input) {
+public class StackStrategy implements PalindromeStrategy {
 
-      if (input == null) {
-         return false;
+   @Override
+   public boolean check(String input) {
+
+      String normalized = input.replaceAll("\\s+", "").toLowerCase();
+      Stack<Character> stack = new Stack<>();
+
+      for (char ch : normalized.toCharArray()) {
+         stack.push(ch);
       }
 
-      // Normalize input (optional improvement)
-      String normalized = input.replaceAll("\\s+", "").toLowerCase();
-
-      char[] chars = normalized.toCharArray();
-      int start = 0;
-      int end = chars.length - 1;
-
-      while (start < end) {
-         if (chars[start] != chars[end]) {
+      for (char ch : normalized.toCharArray()) {
+         if (ch != stack.pop()) {
             return false;
          }
-         start++;
-         end--;
       }
 
       return true;
